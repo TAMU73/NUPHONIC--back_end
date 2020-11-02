@@ -2,4 +2,4 @@
 
 # NUPHONIC [Music Streaming App]
 ## Node.js, Express.js, MongoDB
-This is a back-end configuration for flutter mobile application.
+This is a back-end configuration for this flutter mobile application.
