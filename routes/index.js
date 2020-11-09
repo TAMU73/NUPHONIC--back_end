@@ -28,8 +28,12 @@ router.delete('/delete_user/:id', actions.delete_user)
 //@route /forgot_password
 router.patch('/forgot_password', actions.forgot_password)
 
-//@desc confirm code and change password
+//@desc confirm code
 //@route /confirm_code
-router.patch('/confirm_code/:code', actions.confirm_code)
+router.patch('/confirm_code', actions.confirm_code)
+
+//@desc reset password
+//@route /reset_password
+router.patch('/reset_password', actions.reset_password)
 
 module.exports = router
