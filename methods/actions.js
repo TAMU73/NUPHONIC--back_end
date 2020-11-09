@@ -52,6 +52,7 @@ const functions = {
                                     })
                                 } else {
                                     var full_name = req.body.full_name
+                                    var first_name = full_name.split(" ")[0]
                                     var username = req.body.username
                                     var email = req.body.email
                                     await transport.sendMail({
@@ -115,7 +116,7 @@ const functions = {
                                                                                                                     <tbody>
                                                                                                                         <tr>
                                                                                                                             <td class="esd-block-text es-m-txt-c es-p20r es-p20l" align="center">
-                                                                                                                                <h1 style="color: #7b4bff; line-height: 100%;">Welcome ${full_name},</h1>
+                                                                                                                                <h1 style="color: #7b4bff; line-height: 100%;">Welcome ${first_name},</h1>
                                                                                                                             </td>
                                                                                                                         </tr>
                                                                                                                     </tbody>
@@ -152,13 +153,13 @@ const functions = {
                                                                                                                             </td>
                                                                                                                         </tr>
                                                                                                                         <tr>
-                                                                                                                            <td align="center" class="esd-block-text es-p30t es-p30b" bgcolor="#3C3C3C">
-                                                                                                                                <p style="color: #7b4bff; line-height: 200%;"><strong>Your Username:&nbsp; ${username}<br>Your Email: ${email}</strong></p>
+                                                                                                                            <td align="center" class="esd-block-text es-p30t es-p30b es-m-txt-r" bgcolor="#000000">
+                                                                                                                                <p style="color: #777777; line-height: 200%;"><strong>Your Username:&nbsp; ${username}<br>Your Email: ${email}</strong></p>
                                                                                                                             </td>
                                                                                                                         </tr>
                                                                                                                         <tr>
                                                                                                                             <td align="center" class="esd-block-text es-p10t es-p10b">
-                                                                                                                                <p style="color: #777777;">If you are having some problem feel free to email us in this conatct.<br>Thank You!</p>
+                                                                                                                                <p style="color: #777777;">If you are having some problem feel free to email us in this contact(tamusanjiv6773@gmail.com).<br><br><br>Thank You!</p>
                                                                                                                             </td>
                                                                                                                         </tr>
                                                                                                                         <tr>
@@ -365,10 +366,11 @@ const functions = {
                         { $set: {reset_code: code}})
                     const user = await User.findOne({email: req.body.email})
                     var full_name = user.full_name
+                    var first_name = full_name.split(" ")[0]
                     await transport.sendMail({
                         to: req.body.email,
                         from: "tamusanjiv6773@gmail.com",
-                        subject: "Confirm your code to reset password",
+                        subject: "Reset Password",
                         html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                         <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
                         
@@ -459,7 +461,7 @@ const functions = {
                                                                                                     <tbody>
                                                                                                         <tr>
                                                                                                             <td class="esd-block-text es-m-txt-l es-p20t es-p20r es-p20l" align="center">
-                                                                                                                <h3 style="font-size: 18px; color: #efebeb;">Hello ${full_name},</h3>
+                                                                                                                <h3 style="font-size: 18px; color: #efebeb;">Hello ${first_name},</h3>
                                                                                                             </td>
                                                                                                         </tr>
                                                                                                         <tr>
