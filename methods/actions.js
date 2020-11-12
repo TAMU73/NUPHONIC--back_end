@@ -21,12 +21,12 @@ const functions = {
         } else if (!valid) {
             res.status(404).send({
                 success: false,
-                msg: "Not a valid email!!"
+                msg: "Email is not valid!!"
             })
         } else if( req.body.password != req.body.retypePassword){
             res.status(404).send({
                 success: false,
-                msg: "Password should match!!"
+                msg: "Both password did not match!!"
             })
         } else {
             User.findOne({
@@ -47,7 +47,7 @@ const functions = {
                                 if(err) {
                                     res.status(404).send({
                                         success: false,
-                                        msg: "Failed to Sign Up!!",
+                                        msg: "Failed to sign up!!",
                                         err: err
                                     })
                                 } else {
@@ -191,14 +191,14 @@ const functions = {
                                     res.status(200).send({
                                         success: true,
                                         id: newUser.id,
-                                        msg: "Signed Up Successfully"
+                                        msg: "Signed Up Successfully."
                                     })
                                 }
                             })
                         } else if(err) {
                             res.status(404).send({
                                 success: false,
-                                msg: "Failed to Sign Up!!",
+                                msg: "Failed to sign up!!",
                                 err: err
                             })
                         } else {
@@ -211,13 +211,13 @@ const functions = {
                 } else if(err) {
                     res.status(404).send({
                         success: false,
-                        msg: "Failed to Sign Up!!",
+                        msg: "Failed to sign up!!",
                         err: err
                     })
                 } else {
                     res.status(404).send({
                         success: false,
-                        msg: "Username should be unique!!"
+                        msg: "Sorry, username is already taken!!"
                     })
                 }
             })
@@ -227,13 +227,13 @@ const functions = {
         var valid = emailRegex.test(req.body.email)
         if(!req.body.email || !req.body.password) {
             res.status(404).send({
-                success: true,
+                success: false,
                 msg: "All fields are required!!"
             })
         } else if (!valid) {
             res.status(404).send({
                 success: false,
-                msg: "Not a valid email!!"
+                msg: "Email is not valid!!"
             })
         } else {
             User.findOne({
@@ -242,24 +242,24 @@ const functions = {
                 if(err) {
                     res.status(404).send({
                         success: false,
-                        msg: "Failed to Sign In!!",
+                        msg: "Failed to sign in!!",
                         err: err
                     })
                 } else if(!user) {
                     res.status(404).send({
                         success: false,
-                        msg: "User not found!!"
+                        msg: "User does not exist!!"
                     })
                 } else if (user && user.password == req.body.password) {
                     res.status(200).send({
                         success: true,
                         id: user.id,
-                        msg: "Signed In Successfully"
+                        msg: "Signed In Successfully."
                     })
                 } else {
                     res.status(404).send({
                         success: false,
-                        msg: "Wrong Password!!"
+                        msg: "Wrong password!!"
                     })
                 }
             })
@@ -295,7 +295,7 @@ const functions = {
                         { $set: {password: req.body.newPassword}})
                     res.status(200).send({
                         success: true,
-                        msg: "Password Successfully Changed"
+                        msg: "Password Changed Successfully."
                     })
                 } else if (req.body.currentPassword != user.password){
                     res.status(404).send({
@@ -312,7 +312,7 @@ const functions = {
         } catch(err) {
             res.status(404).send({
                 success: false,
-                msg: "Failed to Change!!",
+                msg: "Failed to change!!",
                 err: err
             })
         }
@@ -324,18 +324,18 @@ const functions = {
                 await User.deleteOne({_id: req.params.id})
                 res.status(200).send({
                     success: true,
-                    msg: `Deleted account successfully`
+                    msg: "Account Deleted Successfully."
                 })
             } else {
                 res.status(404).send({
                     success: false,
-                    msg: "User not found!!"
+                    msg: "User doest not exist!!"
                 })
             }
         } catch {
             res.status(404).send({
                 success: false,
-                msg: "Failed to Delete!!",
+                msg: "Failed to delete!!",
                 err: err
             })
         }
@@ -344,7 +344,7 @@ const functions = {
         if(!req.body.email) {
             res.status(200).send({
                 success: true,
-                msg: `Email required!!`
+                msg: "Email is required!!"
             })
         } else {
             await User.findOne({email: req.body.email}, async (err, user) => {
@@ -358,7 +358,7 @@ const functions = {
                 else if(!user) {
                     res.status(404).send({
                         success: false,
-                        msg: "User not found!!"
+                        msg: "User does not exist!!"
                     })
                 } else {
                     var code = Math.floor(1000 + Math.random() * 9000)
@@ -507,7 +507,7 @@ const functions = {
                     })
                     res.status(200).send({
                         success: true,
-                        msg: "Code Sent"
+                        msg: "Code Sent."
                     })
                 }
             })
@@ -517,7 +517,7 @@ const functions = {
         if(!req.body.code || !req.body.email) {
             res.status(404).send({
                 success: false,
-                msg: "Code and Email Needed!!"
+                msg: "Code and Email are needed!!"
             })
         } else {
             const user = await User.findOne({email: req.body.email})
@@ -525,12 +525,12 @@ const functions = {
             if(req.body.code==sent_code) {
                 res.status(200).send({
                     success: true,
-                    msg: "Successfull"
+                    msg: "Code Confirmed."
                 })
             } else {
                 res.status(404).send({
                     success: false,
-                    msg: "Incorrect Code!!"
+                    msg: "Incorrect code!!"
                 })
             }
         }
@@ -539,7 +539,7 @@ const functions = {
         if(!req.body.password || !req.body.retypePassword || !req.body.email) {
             res.status(404).send({
                 success: false,
-                msg: "All fields required!!"
+                msg: "All fields are required!!"
             })
         } else {
             await User.findOne({email: req.body.email}, async (err,user) => {
@@ -553,12 +553,12 @@ const functions = {
                 else if(!user) {
                     res.status(404).send({
                         success: false,
-                        msg: "User not found!!"
+                        msg: "User does not exist!!"
                     })
                 } else if (req.body.password != req.body.retypePassword) {
                     res.status(404).send({
                         success: false,
-                        msg: "Both password should match!!"
+                        msg: "Both password did not match!!"
                     })
                 } else {
                     await User.updateOne({email: req.body.email},{
@@ -569,7 +569,7 @@ const functions = {
                     }).then(
                         res.status(200).send({
                             success: true,
-                            msg: "Reset Password Successful"
+                            msg: "Password Reset Successfully."
                         })
                     ) 
                 }
