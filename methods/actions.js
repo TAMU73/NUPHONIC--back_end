@@ -57,7 +57,7 @@ const functions = {
                                     var email = req.body.email
                                     await transport.sendMail({
                                         to: req.body.email,
-                                        from: "tamusanjiv6773@gmail.com",
+                                        from: "nuphonic.contact@gmail.com",
                                         subject: "Welcome to Nuphonic",
                                         html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                                         <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -159,7 +159,7 @@ const functions = {
                                                                                                                         </tr>
                                                                                                                         <tr>
                                                                                                                             <td align="center" class="esd-block-text es-p10t es-p10b">
-                                                                                                                                <p style="color: #777777;">If you are having some problem feel free to email us in this contact(tamusanjiv6773@gmail.com).<br><br><br>Thank You!</p>
+                                                                                                                                <p style="color: #777777;">If you are having some problem feel free to email us in this contact(nuphonic.contact@gmail.com).<br><br><br>Thank You!</p>
                                                                                                                             </td>
                                                                                                                         </tr>
                                                                                                                         <tr>
@@ -369,7 +369,7 @@ const functions = {
                     var first_name = full_name.split(" ")[0]
                     await transport.sendMail({
                         to: req.body.email,
-                        from: "tamusanjiv6773@gmail.com",
+                        from: "nuphonic.contact@gmail.com",
                         subject: "Reset Password",
                         html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                         <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
