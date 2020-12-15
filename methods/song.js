@@ -9,30 +9,47 @@ const functions = {
                 msg: "All fields are required!!"
             })
         } else {
-            var newSong = Song({
-                song_name: req.body.song_name,
-                song_url: req.body.song_url,
-                song_cover_url: req.body.song_cover_url,
-                genre_name: req.body.genre_name,
-                artist_id: req.body.artist_id,
-                album_id: req.body.album_id,
-                song_description: req.body.song_description,
-                song_lyrics: req.body.song_lyrics
-            })
-            newSong.save(async function (err, newSong) {
+            Song.findOne({
+                song_name: req.body.song_name
+            }, function(err, song){
                 if(err) {
                     res.status(404).send({
                         success: false,
-                        msg: "Error in uploading song!!",
-                        err: err
+                        msg: "Error in uploading song!!"
+                    })  
+                } else if(song) {
+                    res.status(404).send({
+                        success: false,
+                        msg: "Song already exists!!"
                     })
                 } else {
-                    res.status(200).send({
-                        success: true,
-                        msg: "Successfully Uploaded."
+                    var newSong = Song({
+                        song_name: req.body.song_name,
+                        song_url: req.body.song_url,
+                        song_cover_url: req.body.song_cover_url,
+                        genre_name: req.body.genre_name,
+                        artist_id: req.body.artist_id,
+                        album_id: req.body.album_id,
+                        song_description: req.body.song_description,
+                        song_lyrics: req.body.song_lyrics
+                    })
+                    newSong.save(async function (err, newSong) {
+                        if(err) {
+                            res.status(404).send({
+                                success: false,
+                                msg: "Error in uploading song!!",
+                                err: err
+                            })
+                        } else {
+                            res.status(200).send({
+                                success: true,
+                                msg: "Successfully Uploaded."
+                            })
+                        }
                     })
                 }
             })
+        
         }
     },
 
@@ -51,6 +68,31 @@ const functions = {
             })
         }
     },
+
+    browse_songs: function(req, res) {
+        try{
+            Song.findRandom({}, {}, {limit: Infinity}, function(err, results){
+                if(err) {
+                    res.status(404).send({
+                        success: false,
+                        msg: "Failed to retrive Songs!!",
+                        err: err
+                    })
+                } else {
+                    res.status(200).send({
+                        success: true,
+                        songs: results
+                    })
+                }
+            })
+        } catch(err) {
+            res.status(404).send({
+                success: false,
+                msg: "Failed to retrive Songs!!",
+                err: err
+            })
+        }
+    }
 }
 
 module.exports = functions
