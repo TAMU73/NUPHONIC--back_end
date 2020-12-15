@@ -11,6 +11,7 @@ const transport = nodemailer.createTransport(sendgridTransport({
 }))
 
 const functions = {
+
     sign_up: function (req, res) {
         var valid = emailRegex.test(req.body.email)
         if(!req.body.email || !req.body.password || !req.body.retypePassword || !req.body.full_name || !req.body.username) {
@@ -38,6 +39,7 @@ const functions = {
                     }, function(err, user){
                         if(!user) {
                             var newUser = User({
+                                profile_picture: req.body.profile_picture,
                                 full_name: req.body.full_name,
                                 username: req.body.username,
                                 email: req.body.email,
