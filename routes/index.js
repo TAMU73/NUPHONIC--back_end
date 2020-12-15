@@ -40,7 +40,7 @@ router.post('/sign_up', authentication.sign_up)
 
 //@desc signing in user
 //@route /sign_in
-router.get('/sign_in', authentication.sign_in)
+router.post('/sign_in', authentication.sign_in)
 
 //@desc getting information of the user
 //@route /get_info
