@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const random = require('mongoose-simple-random')
+
 const Schema = mongoose.Schema;
 const songSchema = Schema({
     song_name: {
@@ -38,5 +40,6 @@ const songSchema = Schema({
         default: null
     },
 })
+songSchema.plugin(random)
 
 module.exports = mongoose.model('song', songSchema)

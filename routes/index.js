@@ -10,6 +10,10 @@ const feature = require('../methods/feature')
 //@route /upload_song
 router.post('/upload_song', song.upload_song)
 
+//@desc getting information of the user
+//@route /get_info
+router.get('/browse_songs', song.browse_songs)
+
 //@desc get song detail
 //@route /song_detail
 router.get('/song_detail/:id', song.get_song_detail)
