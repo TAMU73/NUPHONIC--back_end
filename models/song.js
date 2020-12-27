@@ -33,7 +33,6 @@ const songSchema = Schema({
     },
     album_id :{
         type: String,
-        required: true
     },
     album_name: {
         type: String,
