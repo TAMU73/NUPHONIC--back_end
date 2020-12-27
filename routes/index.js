@@ -5,6 +5,23 @@ const router = express.Router()
 const authentication = require('../methods/authentication')
 const song = require('../methods/song')
 const feature = require('../methods/feature')
+const genre = require('../methods/genre')
+
+//@desc genre songs
+//@route /genre songs
+router.get('/genre_songs', genre.get_genre_songs)
+
+//@desc suggest genre
+//@route /suggest_genre
+router.post('/suggest_genre', genre.suggest_genre)
+
+//@desc uploading genre
+//@route /upload_genre
+router.post('/upload_genre', genre.upload_genre)
+
+//@desc browse genres
+//@route /broese_genres
+router.get('/browse_genres', genre.browse_genres)
 
 //@desc uploading song
 //@route /upload_song
