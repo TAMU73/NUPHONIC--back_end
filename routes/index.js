@@ -9,7 +9,7 @@ const genre = require('../methods/genre')
 
 //@desc genre songs
 //@route /genre songs
-router.get('/genre_songs', genre.get_genre_songs)
+router.post('/genre_songs', genre.get_genre_songs)
 
 //@desc suggest genre
 //@route /suggest_genre
