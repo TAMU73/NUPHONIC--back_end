@@ -15,7 +15,7 @@ const songSchema = Schema({
         type: String,
         require: true
     },
-    song_cover_url:  {
+    song_picture_url:  {
         type: String,
         require: true
     },
@@ -23,11 +23,19 @@ const songSchema = Schema({
         type: String,
         required: true
     },
-    artist_id: {
+    artist_id :{
         type: String,
         required: true
     },
-    album_id: {
+    artist_username: {
+        type: String,
+        required: true
+    },
+    album_id :{
+        type: String,
+        required: true
+    },
+    album_name: {
         type: String,
         default: 'Single'
     },

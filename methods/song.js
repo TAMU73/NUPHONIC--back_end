@@ -3,7 +3,7 @@ const Song = require('../models/song')
 const functions = {
     
     upload_song: function (req, res) {
-        if(!req.body.song_name || !req.body.song_url || !req.body.song_cover_url || !req.body.genre_name || !req.body.artist_id || !req.body.song_description) {
+        if(!req.body.song_name || !req.body.song_url || !req.body.song_cover_url || !req.body.genre_name || !req.body.artist_username || !req.body.artist_id || !req.body.song_description) {
             res.status(404).send({
                 success: false,
                 msg: "All fields are required!!"
@@ -26,10 +26,12 @@ const functions = {
                     var newSong = Song({
                         song_name: req.body.song_name,
                         song_url: req.body.song_url,
-                        song_cover_url: req.body.song_cover_url,
+                        song_picture_url: req.body.song_cover_url,
                         genre_name: req.body.genre_name,
                         artist_id: req.body.artist_id,
+                        artist_username: req.body.artist_username,
                         album_id: req.body.album_id,
+                        album_name: req.body.album_name,
                         song_description: req.body.song_description,
                         song_lyrics: req.body.song_lyrics
                     })
@@ -43,7 +45,8 @@ const functions = {
                         } else {
                             res.status(200).send({
                                 success: true,
-                                msg: "Successfully Uploaded."
+                                msg: "Successfully Uploaded.",
+                                song: newSong
                             })
                         }
                     })
@@ -71,24 +74,24 @@ const functions = {
 
     browse_songs: function(req, res) {
         try{
-            Song.findRandom({}, {}, {limit: Infinity}, function(err, results){
+            Song.findRandom({}, {}, {limit: Infinity}, function(err, songs){
                 if(err) {
                     res.status(404).send({
                         success: false,
-                        msg: "Failed to retrive Songs!!",
+                        msg: "Failed to retrive songs!!",
                         err: err
                     })
                 } else {
                     res.status(200).send({
                         success: true,
-                        songs: results
+                        songs: songs
                     })
                 }
             })
         } catch(err) {
             res.status(404).send({
                 success: false,
-                msg: "Failed to retrive Songs!!",
+                msg: "Failed to retrive songs!!",
                 err: err
             })
         }
