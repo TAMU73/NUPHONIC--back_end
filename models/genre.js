@@ -7,6 +7,10 @@ const genreSchema = Schema({
         type: String,
         required: true
     },
+    genre_color :{
+        type: String,
+        required: true
+    },
     genre_picture_url: {
         type: String,
         required: true
