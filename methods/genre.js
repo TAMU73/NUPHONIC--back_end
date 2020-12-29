@@ -1,9 +1,10 @@
 const Genre = require('../models/genre')
+const SuggestedGenre = require('../models/suggested_genre')
 const Song = require('../models/song')
 
 const functions = {
     upload_genre: function(req, res) {
-        if(!req.body.genre_name || !req.body.genre_picture_url) {
+        if(!req.body.genre_name || !req.body.genre_picture_url || !req.body.genre_color) {
             res.status(404).send({
                 success: false,
                 msg: "All fields are required!!"
@@ -24,19 +25,20 @@ const functions = {
                 } else {
                     var newGenre = Genre({
                         genre_name: req.body.genre_name,
-                        genre_picture_url: req.body.genre_picture_url
+                        genre_picture_url: req.body.genre_picture_url,
+                        genre_color: req.body.genre_color
                     })
                     newGenre.save(function(err, genre){
                         if(err) {
                             res.status(404).send({
                                 success: false,
-                                msg: "Error in uploading genre!",
+                                msg: "Error in uploading genre!!",
                                 err: err
                             })
                         } else {
                             res.status(200).send({
                                 success: true,
-                                msg: "Successfully Uploaded",
+                                msg: "Successfully Uploaded.",
                                 genre: genre
                             })
                         
@@ -73,10 +75,10 @@ const functions = {
     },
 
     suggest_genre: async function(req, res) {
-        if(!req.body.genre_name || !req.body.email) {
+        if(!req.body.genre_name || !req.body.user_id || !req.body.genre_description) {
             res.status(404).send({
                 success: false,
-                msg: "Genre name is required!!"
+                msg: "All fields are required!!"
             })
         } else {
             Genre.findOne({genre_name: req.body.genre_name}, async function(err, genre) {
@@ -92,9 +94,26 @@ const functions = {
                         msg: "Genre already exists!!",
                     })
                 } else {
-                    res.status(200).send({
-                        success: true,
-                        msg: "Successfully suggested.",
+                    var newGenre = SuggestedGenre({
+                        genre_name: req.body.genre_name,
+                        genre_description: req.body.genre_description,
+                        suggested_by: req.body.user_id
+                    })
+                    newGenre.save(function(err, genre){
+                        if(err) {
+                            res.status(404).send({
+                                success: false,
+                                msg: "Error in suggesting genre!!",
+                                err: err
+                            })
+                        } else {
+                            res.status(200).send({
+                                success: true,
+                                msg: "Successfully Suggested.",
+                                genre: genre
+                            })
+                        
+                        }
                     })
                 }
             })
