@@ -9,6 +9,10 @@ const suggestedGenreSchema = Schema({
     genre_description: {
         type: String,
         required: true
+    },
+    suggested_by: {
+        type: String,
+        required: true
     }
 })
 
