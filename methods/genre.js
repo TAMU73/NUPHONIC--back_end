@@ -75,7 +75,7 @@ const functions = {
     },
 
     suggest_genre: async function(req, res) {
-        if(!req.body.genre_name || !req.body.email || !req.body.genre_description) {
+        if(!req.body.genre_name || !req.body.user_id || !req.body.genre_description) {
             res.status(404).send({
                 success: false,
                 msg: "All fields are required!!"
@@ -97,6 +97,7 @@ const functions = {
                     var newGenre = SuggestedGenre({
                         genre_name: req.body.genre_name,
                         genre_description: req.body.genre_description,
+                        suggested_by: req.body.user_id
                     })
                     newGenre.save(function(err, genre){
                         if(err) {
