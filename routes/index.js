@@ -6,6 +6,15 @@ const authentication = require('../methods/authentication')
 const song = require('../methods/song')
 const feature = require('../methods/feature')
 const genre = require('../methods/genre')
+const album = require('../methods/album')
+
+//@desc uploading album
+//@route /upload_album
+router.post('/create_album', album.create_album)
+
+//@desc adding album songs
+//@route /add_album_songs
+router.patch('/add_album_songs', album.add_songs)
 
 //@desc genre songs
 //@route /genre songs
@@ -30,6 +39,10 @@ router.post('/upload_song', song.upload_song)
 //@desc getting information of the user
 //@route /get_info
 router.get('/browse_songs', song.browse_songs)
+
+//@desc get artist songs
+//@route /artist_songs
+router.get('/artist_songs/:id', song.get_artist_songs)
 
 //@desc get song detail
 //@route /song_detail

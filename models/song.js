@@ -27,7 +27,7 @@ const songSchema = Schema({
         type: String,
         required: true
     },
-    artist_username: {
+    artist_name: {
         type: String,
         required: true
     },
