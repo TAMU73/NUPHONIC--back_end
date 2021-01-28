@@ -1,4 +1,5 @@
 const Song = require('../models/song')
+const User = require('../models/user')
 
 const functions = {
     
@@ -124,22 +125,37 @@ const functions = {
                 msg: "Artist ID should be entered!!",
             })
         } else {
-            Song.findRandom({artist_id: req.params.id},{},{limit: Infinity}, function(err, songs){
-                if(err) {
+            User.findById({_id: req.params.id}, function(err, user){
+                if(user) {
+                    Song.findRandom({artist_id: req.params.id},{},{limit: Infinity}, function(err, songs){
+                        if(err) {
+                            res.status(404).send({
+                                success: false,
+                                msg: "Failed to retrive songs!!",
+                                err: err
+                            })
+                        } else if(songs) {
+                            res.status(200).send({
+                                success: true,
+                                songs: songs
+                            })
+                        } else {
+                            res.status(404).send({
+                                success: false,
+                                msg: "No songs found!!",
+                            })
+                        }
+                    })
+                } else if(!user) {
                     res.status(404).send({
                         success: false,
-                        msg: "Failed to retrive songs!!",
-                        err: err
-                    })
-                } else if(songs) {
-                    res.status(200).send({
-                        success: true,
-                        songs: songs
+                        msg: "User does not exist!!"
                     })
                 } else {
                     res.status(404).send({
                         success: false,
-                        msg: "No songs found!!",
+                        msg: "Failed to retrive songs!!",
+                        err: err
                     })
                 }
             })
