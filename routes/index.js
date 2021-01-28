@@ -8,6 +8,10 @@ const feature = require('../methods/feature')
 const genre = require('../methods/genre')
 const album = require('../methods/album')
 
+//@desc get album detail
+//@route /album_detail
+router.get('/album_detail/:id', album.get_album_detail)
+
 //@desc uploading album
 //@route /upload_album
 router.post('/create_album', album.create_album)

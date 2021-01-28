@@ -85,7 +85,37 @@ const functions = {
             })
             
         }
-    }
+    },
+
+    get_album_detail: async function(req, res) {
+        try {
+            await Album.findById(req.params.id, function(err, album){
+                if(album) {
+                    res.status(200).send({
+                        success: true,
+                        album: album
+                    })
+                } else if(err) {
+                    res.status(404).send({
+                        success: false,
+                        msg: "Failed to retrive album details!!",
+                        err: err
+                    })
+                } else {
+                    res.status(404).send({
+                        success: false,
+                        msg: "Album does not exists!!",
+                    })
+                }
+            })
+        } catch(err) {
+            res.status(404).send({
+                success: false,
+                msg: "Failed to retrive album details!!",
+                err: err
+            })
+        }
+    },
 }
 
 module.exports = functions
