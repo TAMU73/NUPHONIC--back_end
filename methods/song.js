@@ -4,7 +4,7 @@ const User = require('../models/user')
 const functions = {
     
     upload_song: function (req, res) {
-        if(!req.body.song_name || !req.body.song_url || !req.body.song_cover_url || !req.body.genre_name || !req.body.artist_id || !req.body.artist_name || !req.body.song_description) {
+        if(!req.body.song_name || !req.body.song_url || !req.body.song_picture_url || !req.body.genre_name || !req.body.artist_id || !req.body.artist_name || !req.body.song_description) {
             res.status(404).send({
                 success: false,
                 msg: "All fields are required!!"
@@ -28,7 +28,7 @@ const functions = {
                     var newSong = Song({
                         song_name: req.body.song_name,
                         song_url: req.body.song_url,
-                        song_picture_url: req.body.song_cover_url,
+                        song_picture_url: req.body.song_picture_url,
                         genre_name: req.body.genre_name,
                         artist_id: req.body.artist_id,
                         artist_name: req.body.artist_name,
@@ -159,6 +159,35 @@ const functions = {
                     })
                 }
             })
+        }
+    },
+    add_listen: async function(req, res) {
+        if(!req.params.id) {
+            res.status(404).send({
+                success: false,
+                msg: "Song ID needed!!"
+            })
+        } else {
+            Song.findOneAndUpdate({_id: req.params.id}, 
+                {$inc:{listens: 1}}, function(err, song) {
+                    if(err) {
+                        res.status(404).send({
+                            success: false,
+                            msg: "Failed to add listen!!",
+                            err: err
+                        })
+                    } else if(song) {
+                        res.status(200).send({
+                            success: true,
+                            msg: "Successfully added listen!!"
+                        }) 
+                    } else {
+                        res.status(404).send({
+                            success: false,
+                            msg: "Song does not exists!!",
+                        })
+                    }
+                })
         }
     }
 }

@@ -46,6 +46,10 @@ const songSchema = Schema({
         type: String,
         default: null
     },
+    listens: {
+        type: Number,
+        default: 0
+    }
 })
 songSchema.plugin(random)
 
