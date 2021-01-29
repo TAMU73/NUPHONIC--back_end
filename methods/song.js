@@ -168,8 +168,8 @@ const functions = {
                 msg: "Song ID needed!!"
             })
         } else {
-            await Song.findOneAndUpdate({_id: req.params.id}, 
-                { $inc: {listens: 1}}, function(err, song) {
+            Song.findOneAndUpdate({_id: req.params.id}, 
+                {$inc:{listens: 1}}, function(err, song) {
                     if(err) {
                         res.status(404).send({
                             success: false,
@@ -187,7 +187,7 @@ const functions = {
                             msg: "Song does not exists!!",
                         })
                     }
-                })   
+                })
         }
     }
 }
