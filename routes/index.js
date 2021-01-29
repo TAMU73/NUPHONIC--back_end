@@ -40,6 +40,10 @@ router.get('/browse_genres', genre.browse_genres)
 //@route /upload_song
 router.post('/upload_song', song.upload_song)
 
+//@desc adding listens
+//@route /add_listen
+router.patch('/add_listen/:id', song.add_listen)
+
 //@desc getting information of the user
 //@route /get_info
 router.get('/browse_songs', song.browse_songs)
