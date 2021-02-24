@@ -7,6 +7,31 @@ const song = require('../methods/song')
 const feature = require('../methods/feature')
 const genre = require('../methods/genre')
 const album = require('../methods/album')
+const playlist = require('../methods/playlist')
+
+//@desc delete user's playlist song
+//@route /delete_playlist_song
+router.patch('/delete_playlist_song', playlist.delete_playlist_song)
+
+//@desc delete user's playlists
+//@route /delete_playlist
+router.delete('/delete_playlist/:id', playlist.delete_playlist)
+
+//@desc get user's playlists
+//@route /user_playlists
+router.get('/user_playlists/:id', playlist.get_user_playlists)
+
+//@desc get playlist detail
+//@route /playlist_detail
+router.get('/playlist_detail/:id', playlist.get_playlist_detail)
+
+//@desc adding playlist songs
+//@route /add_playlist_songs
+router.post('/add_playlist_songs', playlist.add_songs)
+
+//@desc creating playlist
+//@route /create_playlist
+router.post('/create_playlist', playlist.create_playlist)
 
 //@desc get album detail
 //@route /album_detail

@@ -34,13 +34,13 @@ const functions = {
                         if(err) {
                             res.status(404).send({
                                 success: false,
-                                msg: "Error in uploading album!!",
+                                msg: "Error in creating album!!",
                                 err: err
                             })
                         } else {
                             res.status(200).send({
                                 success: true,
-                                msg: "Successfully Uploaded.",
+                                msg: "Successfully Created.",
                                 album: newAlbum
                             })
                         }
@@ -68,7 +68,7 @@ const functions = {
                     )
                     res.status(200).send({
                         success: true,
-                        msg: "Successfully Updated.",
+                        msg: "Successfully Added.",
                     })
                 } else if(err) {
                     res.status(404).send({
