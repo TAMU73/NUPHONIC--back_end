@@ -61,6 +61,10 @@ router.post('/upload_genre', genre.upload_genre)
 //@route /broese_genres
 router.get('/browse_genres', genre.browse_genres)
 
+//@desc deleting song
+//@route /delete_song
+router.delete('/delete_song', song.delete_song)
+
 //@desc uploading song
 //@route /upload_song
 router.post('/upload_song', song.upload_song)
