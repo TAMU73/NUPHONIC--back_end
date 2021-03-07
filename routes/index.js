@@ -33,6 +33,18 @@ router.post('/add_playlist_songs', playlist.add_songs)
 //@route /create_playlist
 router.post('/create_playlist', playlist.create_playlist)
 
+//@desc delete user's album song
+//@route /delete_album_song
+router.patch('/delete_album_song', album.delete_album_song)
+
+//@desc delete user's albums
+//@route /delete_album
+router.delete('/delete_album/:id', album.delete_album)
+
+//@desc get user's albums
+//@route /user_albums
+router.get('/user_albums/:id', album.get_user_albums)
+
 //@desc get album detail
 //@route /album_detail
 router.get('/album_detail/:id', album.get_album_detail)
