@@ -1,4 +1,5 @@
 const Album = require('../models/album')
+const Song = require('../models/song')
 
 const functions = {
     create_album: function(req, res) {
@@ -185,11 +186,21 @@ const functions = {
                         if(album) {
                             await Album.findByIdAndUpdate(req.body.album_id, {$pull: {album_songs: req.body.song_id}}, async function(err, album){
                                 if(album) {
-                                    await Song.findOneAndUpdate({_id: req.body.song_id},{ $set: {album_id: null, album_name: 'Single'}})
-                                    res.status(200).send({
-                                        success: true,
-                                        msg: "Successfully Deleted.",
+                                    Song.updateOne({_id: req.body.song_id},{$set: {album_id: null, album_name: 'Single'}}, async function(err, song){
+                                        if(song) {
+                                            res.status(200).send({
+                                                success: true,
+                                                msg: "Successfully Deleted.",
+                                            })
+                                        } else {
+                                            res.status(404).send({
+                                                success: false,
+                                                msg: "Error in deleting songs from the album!!",
+                                                err: err
+                                            })
+                                        }
                                     })
+                                    
                                 } else {
                                     res.status(404).send({
                                         success: false,
