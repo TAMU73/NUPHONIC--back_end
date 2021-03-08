@@ -146,7 +146,7 @@ const functions = {
                 if(albumIsEmpty != 0) {
                     res.status(404).send({
                         success: false,
-                        msg: "Album should not contain any songs to be deleted!!",
+                        msg: "Empty the album in order to delete!!",
                     })
                 } else {
                     await Album.deleteOne({_id: req.params.id})

@@ -205,20 +205,28 @@ const functions = {
                         artist_id: req.body.user_id
                     }, async function(err, song){
                         if(song) {
-                            await Song.deleteOne({_id: req.body.song_id}, async function(err, song){
-                                if(song) {
-                                    res.status(200).send({
-                                        success: true,
-                                        msg: "Successfully Deleted.",
-                                    })
-                                } else {
-                                    res.status(404).send({
-                                        success: false,
-                                        msg: "Error in deleting song!!",
-                                        err: err
-                                    })
-                                }
-                            })
+                            if(song.album_name == 'Single') {
+                                await Song.deleteOne({_id: req.body.song_id}, async function(err, song){
+                                    if(song) {
+                                        res.status(200).send({
+                                            success: true,
+                                            msg: "Successfully Deleted.",
+                                        })
+                                    } else {
+                                        res.status(404).send({
+                                            success: false,
+                                            msg: "Error in deleting song!!",
+                                            err: err
+                                        })
+                                    }
+                                })
+                            } else {
+                                res.status(404).send({
+                                    success: false,
+                                    msg: "Remove this song from album first in order to delete!!",
+                                    err: err
+                                })
+                            }
                         } else if(err) {
                             res.status(404).send({
                                 success: false,
