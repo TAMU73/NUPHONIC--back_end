@@ -1,4 +1,5 @@
 const Album = require('../models/album')
+const Song = require('../models/song')
 
 const functions = {
     create_album: function(req, res) {
@@ -49,7 +50,6 @@ const functions = {
             })
         }
     },
-
     add_songs: async function(req, res) {
         if(!req.body.song_id || !req.body.album_id) {
             res.status(404).send({
@@ -86,7 +86,6 @@ const functions = {
             
         }
     },
-
     get_album_detail: async function(req, res) {
         try {
             await Album.findById(req.params.id, function(err, album){
@@ -116,6 +115,128 @@ const functions = {
             })
         }
     },
+    get_user_albums: async function(req, res) {
+        await Album.find({
+            artist_id: req.params.id
+        }, async function(err, albums) {
+            if(albums) {
+                res.status(200).send({
+                    success: true,
+                    albums: albums
+                })
+            } else if(!albums) {
+                res.status(404).send({
+                    success: false,
+                    msg: "You don't have any albums!!",
+                })
+            } else {
+                res.status(404).send({
+                    success: false,
+                    msg: "Failed to retrive your album details!!",
+                    err: err
+                })
+            }
+        })
+    },
+    delete_album: async function(req, res) {
+        await Album.findById({
+            _id: req.params.id
+        }, async function(err, album) {
+            if(album) {
+                var albumIsEmpty = album.album_songs.length
+                if(albumIsEmpty != 0) {
+                    res.status(404).send({
+                        success: false,
+                        msg: "Empty the album in order to delete!!",
+                    })
+                } else {
+                    await Album.deleteOne({_id: req.params.id})
+                    res.status(200).send({
+                        success: true,
+                        msg: "Album Deleted Successfully."
+                    })
+                }
+            } else if(!album) {
+                res.status(404).send({
+                    success: false,
+                    msg: "Album does not exists!!",
+                })
+            } else {
+                res.status(404).send({
+                    success: false,
+                    msg: "Failed to delete your album!!",
+                    err: err
+                })
+            }
+        })
+    },
+    delete_album_song: async function(req, res) {
+        if(!req.body.song_id || !req.body.album_id) {
+            res.status(404).send({
+                success: false,
+                msg: "All fields are required!!",
+            })
+        } else {
+            Album.findById({_id: req.body.album_id}, async function(err, album) {
+                if(album) {
+                    Album.findOne({
+                        _id: req.body.album_id,
+                        album_songs: {"$in" : req.body.song_id}
+                    }, async function(err, album){
+                        if(album) {
+                            await Album.findByIdAndUpdate(req.body.album_id, {$pull: {album_songs: req.body.song_id}}, async function(err, album){
+                                if(album) {
+                                    Song.updateOne({_id: req.body.song_id},{$set: {album_id: null, album_name: 'Single'}}, async function(err, song){
+                                        if(song) {
+                                            res.status(200).send({
+                                                success: true,
+                                                msg: "Successfully deleted song from the album.",
+                                            })
+                                        } else {
+                                            res.status(404).send({
+                                                success: false,
+                                                msg: "Error in deleting song from the album!!",
+                                                err: err
+                                            })
+                                        }
+                                    })
+                                    
+                                } else {
+                                    res.status(404).send({
+                                        success: false,
+                                        msg: "Error in deleting songs from the album!!",
+                                        err: err
+                                    })
+                                }
+                            })
+                        } else if(err) {
+                            res.status(404).send({
+                                success: false,
+                                msg: "Error in deleting songs from the album!!",
+                                err: err
+                            })
+                        } else {
+                            res.status(404).send({
+                                success: false,
+                                msg: "Song does not exists in this album!!",
+                            })
+                        }
+                    })
+                } else if(!album) {
+                    res.status(404).send({
+                        success: false,
+                        msg: "Album does not exists!!",
+                    })
+                } else {
+                    res.status(404).send({
+                        success: false,
+                        msg: "Error in deleting songs from the album!!",
+                        err: err
+                    })
+                }
+            }) 
+        }
+    }
 }
 
 module.exports = functions

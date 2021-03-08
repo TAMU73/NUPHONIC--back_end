@@ -184,7 +184,7 @@ const functions = {
             } else {
                 res.status(404).send({
                     success: false,
-                    msg: "Failed to retrive your playlist details!!",
+                    msg: "Failed to delete your album!!",
                     err: err
                 })
             }
