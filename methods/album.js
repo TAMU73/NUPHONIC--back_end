@@ -185,7 +185,7 @@ const functions = {
                         if(album) {
                             await Album.findByIdAndUpdate(req.body.album_id, {$pull: {album_songs: req.body.song_id}}, async function(err, album){
                                 if(album) {
-                                    await song.findOneAndUpdate({_id: req.body.song_id},{ $set: {album_id: null, album_name: 'Single'}})
+                                    await Song.findOneAndUpdate({_id: req.body.song_id},{ $set: {album_id: null, album_name: 'Single'}})
                                     res.status(200).send({
                                         success: true,
                                         msg: "Successfully Deleted.",
