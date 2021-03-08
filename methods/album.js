@@ -190,12 +190,12 @@ const functions = {
                                         if(song) {
                                             res.status(200).send({
                                                 success: true,
-                                                msg: "Successfully Deleted.",
+                                                msg: "Successfully deleted song from the album.",
                                             })
                                         } else {
                                             res.status(404).send({
                                                 success: false,
-                                                msg: "Error in deleting songs from the album!!",
+                                                msg: "Error in deleting song from the album!!",
                                                 err: err
                                             })
                                         }
@@ -218,7 +218,7 @@ const functions = {
                         } else {
                             res.status(404).send({
                                 success: false,
-                                msg: "Song does not exists!!",
+                                msg: "Song does not exists in this album!!",
                             })
                         }
                     })

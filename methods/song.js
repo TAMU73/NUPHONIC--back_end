@@ -47,7 +47,7 @@ const functions = {
                         } else {
                             res.status(200).send({
                                 success: true,
-                                msg: "Successfully Uploaded.",
+                                msg: "Successfully uploaded the song.",
                                 song: newSong
                             })
                         }
@@ -210,7 +210,7 @@ const functions = {
                                     if(song) {
                                         res.status(200).send({
                                             success: true,
-                                            msg: "Successfully Deleted.",
+                                            msg: "Successfully deleted the song.",
                                         })
                                     } else {
                                         res.status(404).send({
