@@ -8,6 +8,19 @@ const feature = require('../methods/feature')
 const genre = require('../methods/genre')
 const album = require('../methods/album')
 const playlist = require('../methods/playlist')
+const support = require('../methods/support')
+
+//@desc get user's super supportered list
+//@route /super_supportered
+router.get('/super_supported/:id', support.get_supported)
+
+//@desc get user's super supporters
+//@route /super_supporters
+router.get('/super_supporters/:id', support.get_supporters)
+
+//@desc super support
+//@route /super_support
+router.post('/super_support', support.support_artist)
 
 //@desc delete user's playlist song
 //@route /delete_playlist_song
