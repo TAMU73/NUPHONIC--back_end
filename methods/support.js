@@ -2,7 +2,7 @@ const Support = require('../models/support')
 
 const functions = {
     support_artist: function (req, res) {
-        if(!req.body.supporter_id || !req.body.supporter_name || !req.body.supporter_profile_picture || !req.body.supported_amount || !req.body.supported_song|| !req.body.message|| !req.body.payment_method) {
+        if(!req.body.supporter_id || !req.body.supporter_name || !req.body.supported_amount || !req.body.supported_song|| !req.body.message|| !req.body.payment_method) {
             res.status(404).send({
                 success: false,
                 msg: "All fields are required!!"
