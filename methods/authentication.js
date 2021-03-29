@@ -568,16 +568,80 @@ const functions = {
                             password: req.body.password,
                             reset_code: null
                         }
-                    }).then(
-                        res.status(200).send({
-                            success: true,
-                            msg: "Password Reset Successfully."
-                        })
-                    ) 
+                    }, async function(err, success) {
+                        if(success) {
+                            res.status(200).send({
+                                success: true,
+                                msg: "Password Reset Successfully."
+                            })
+                        } else {
+                            res.status(404).send({
+                                success: false,
+                                msg: "Unable to reset password, please try again.",
+                                err: err
+                            })
+                        }
+                    })
                 }
             })
         }
-    }   
+    },
+    edit_profile: async function(req, res) {
+        if(!req.body.user_id || !req.body.username || !req.body.full_name || ! req.body.profile_picture) {
+            res.status(404).send({
+                success: false,
+                msg: "All fields are required!!"
+            })
+        } else {
+            User.findById(req.body.user_id, async function(err, user) {
+                if(user) {
+                    if(user.username == req.body.username && user.full_name == req.body.full_name && user.profile_picture == req.body.profile_picture) {
+                        res.status(404).send({
+                            success: false,
+                            msg: "Please make a change to update."
+                        })
+                    } else {
+                        await User.findByIdAndUpdate(req.body.user_id,{
+                            $set: {
+                                username: req.body.username,
+                                full_name: req.body.full_name,
+                                profile_picture: req.body.profile_picture
+                            }
+                        }, async function(err, success) {
+                            if(success) {
+                                res.status(200).send({
+                                    success: true,
+                                    msg: "Successfully updated profile."
+                                })
+                            } else if(!success) {
+                                res.status(404).send({
+                                    success: false,
+                                    msg: "User does not exists."
+                                })
+                            } else {
+                                res.status(404).send({
+                                    success: false,
+                                    msg: "Unable to update profile, please try again.",
+                                    err: err
+                                })
+                            }
+                        })
+                    }
+                } else if(!user) {
+                    res.status(404).send({
+                        success: false,
+                        msg: "User does not exists."
+                    })
+                } else {
+                    res.status(404).send({
+                        success: false,
+                        msg: "Unable to update profile, please try again.",
+                        err: err
+                    })
+                }
+            })      
+        }
+    }
         
 }
 

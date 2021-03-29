@@ -1,6 +1,4 @@
-//@package importing
 const express = require('express')
-
 const router = express.Router()
 const authentication = require('../methods/authentication')
 const song = require('../methods/song')
@@ -9,6 +7,45 @@ const genre = require('../methods/genre')
 const album = require('../methods/album')
 const playlist = require('../methods/playlist')
 const support = require('../methods/support')
+const favouriteSong = require('../methods/favourite_song')
+const favouriteArtist = require('../methods/favourite_artist')
+const search = require('../methods/search')
+
+//@desc get user's favourite artists list
+//@route /get_favourite_artists
+router.get('/search_artists/:name', search.search_artists)
+
+//@desc get user's favourite artists list
+//@route /get_favourite_artists
+router.get('/search_songs/:name', search.search_songs)
+
+//@desc editing user profile
+//@route /edit_profile
+router.patch('/edit_profile', authentication.edit_profile)
+
+//@desc get user's favourite artists list
+//@route /get_favourite_artists
+router.get('/get_favourite_artists/:id', favouriteArtist.get_favourite_artists)
+
+//@desc removing favourite artists
+//@route /remove_favourite_artists
+router.patch('/remove_favourite_artists', favouriteArtist.remove_artists)
+
+//@desc adding favourite artists
+//@route /add_favourite_artists
+router.patch('/add_favourite_artists', favouriteArtist.add_artists)
+
+//@desc get user's favourite songs list
+//@route /super_supportered
+router.get('/get_favourite_songs/:id', favouriteSong.get_favourite_songs)
+
+//@desc removing favourite songs
+//@route /remove_favourite_songs
+router.patch('/remove_favourite_songs', favouriteSong.remove_songs)
+
+//@desc adding favourite songs
+//@route /add_favourite_songs
+router.patch('/add_favourite_songs', favouriteSong.add_songs)
 
 //@desc get user's super supportered list
 //@route /super_supportered
