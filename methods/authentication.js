@@ -601,20 +601,37 @@ const functions = {
                             msg: "Please make a change in username to update."
                         })
                     } else {
-                        await User.findByIdAndUpdate(req.body.user_id,{
-                            $set: {
-                                username: req.body.username
-                            }
-                        }, async function(err, success) {
-                            if(success) {
-                                res.status(200).send({
-                                    success: true,
-                                    msg: "Successfully updated username."
+                        User.findOne({
+                            username: req.body.username
+                        }, async function(err, hasUser) {
+                            if(!hasUser) {
+                                await User.findByIdAndUpdate(req.body.user_id,{
+                                    $set: {
+                                        username: req.body.username
+                                    }
+                                }, async function(err, success) {
+                                    if(success) {
+                                        res.status(200).send({
+                                            success: true,
+                                            msg: "Successfully updated username."
+                                        })
+                                    } else if(!success) {
+                                        res.status(404).send({
+                                            success: false,
+                                            msg: "User does not exists."
+                                        })
+                                    } else {
+                                        res.status(404).send({
+                                            success: false,
+                                            msg: "Unable to update username, please try again.",
+                                            err: err
+                                        })
+                                    }
                                 })
-                            } else if(!success) {
+                            } else if(hasUser) {
                                 res.status(404).send({
                                     success: false,
-                                    msg: "User does not exists."
+                                    msg: "This username is already taken."
                                 })
                             } else {
                                 res.status(404).send({
