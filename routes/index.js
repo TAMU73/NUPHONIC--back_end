@@ -19,9 +19,17 @@ router.get('/search_artists/:name', search.search_artists)
 //@route /get_favourite_artists
 router.get('/search_songs/:name', search.search_songs)
 
-//@desc editing user profile
-//@route /edit_profile
-router.patch('/edit_profile', authentication.edit_profile)
+//@desc editing user profile picture
+//@route /edit_profile_picture
+router.patch('/edit_profile_picture', authentication.edit_profile_picture)
+
+//@desc editing user fullname
+//@route /edit_fullname
+router.patch('/edit_fullname', authentication.edit_fullname)
+
+//@desc editing user username
+//@route /edit_username
+router.patch('/edit_username', authentication.edit_username)
 
 //@desc get user's favourite artists list
 //@route /get_favourite_artists

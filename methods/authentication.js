@@ -586,8 +586,8 @@ const functions = {
             })
         }
     },
-    edit_profile: async function(req, res) {
-        if(!req.body.user_id || !req.body.username || !req.body.full_name || ! req.body.profile_picture) {
+    edit_username: async function(req, res) {
+        if(!req.body.user_id || !req.body.username) {
             res.status(404).send({
                 success: false,
                 msg: "All fields are required!!"
@@ -595,23 +595,21 @@ const functions = {
         } else {
             User.findById(req.body.user_id, async function(err, user) {
                 if(user) {
-                    if(user.username == req.body.username && user.full_name == req.body.full_name && user.profile_picture == req.body.profile_picture) {
+                    if(user.username == req.body.username) {
                         res.status(404).send({
                             success: false,
-                            msg: "Please make a change to update."
+                            msg: "Please make a change in username to update."
                         })
                     } else {
                         await User.findByIdAndUpdate(req.body.user_id,{
                             $set: {
-                                username: req.body.username,
-                                full_name: req.body.full_name,
-                                profile_picture: req.body.profile_picture
+                                username: req.body.username
                             }
                         }, async function(err, success) {
                             if(success) {
                                 res.status(200).send({
                                     success: true,
-                                    msg: "Successfully updated profile."
+                                    msg: "Successfully updated username."
                                 })
                             } else if(!success) {
                                 res.status(404).send({
@@ -621,7 +619,7 @@ const functions = {
                             } else {
                                 res.status(404).send({
                                     success: false,
-                                    msg: "Unable to update profile, please try again.",
+                                    msg: "Unable to update username, please try again.",
                                     err: err
                                 })
                             }
@@ -635,7 +633,115 @@ const functions = {
                 } else {
                     res.status(404).send({
                         success: false,
-                        msg: "Unable to update profile, please try again.",
+                        msg: "Unable to update username, please try again.",
+                        err: err
+                    })
+                }
+            })      
+        }
+    },
+    edit_fullname: async function(req, res) {
+        if(!req.body.user_id || !req.body.full_name) {
+            res.status(404).send({
+                success: false,
+                msg: "All fields are required!!"
+            })
+        } else {
+            User.findById(req.body.user_id, async function(err, user) {
+                if(user) {
+                    if(user.full_name == req.body.full_name) {
+                        res.status(404).send({
+                            success: false,
+                            msg: "Please make a change in full name to update."
+                        })
+                    } else {
+                        await User.findByIdAndUpdate(req.body.user_id,{
+                            $set: {
+                                full_name: req.body.full_name
+                            }
+                        }, async function(err, success) {
+                            if(success) {
+                                res.status(200).send({
+                                    success: true,
+                                    msg: "Successfully updated full name."
+                                })
+                            } else if(!success) {
+                                res.status(404).send({
+                                    success: false,
+                                    msg: "User does not exists."
+                                })
+                            } else {
+                                res.status(404).send({
+                                    success: false,
+                                    msg: "Unable to update full name, please try again.",
+                                    err: err
+                                })
+                            }
+                        })
+                    }
+                } else if(!user) {
+                    res.status(404).send({
+                        success: false,
+                        msg: "User does not exists."
+                    })
+                } else {
+                    res.status(404).send({
+                        success: false,
+                        msg: "Unable to update full name, please try again.",
+                        err: err
+                    })
+                }
+            })      
+        }
+    },
+    edit_profile_picture: async function(req, res) {
+        if(!req.body.user_id || ! req.body.profile_picture) {
+            res.status(404).send({
+                success: false,
+                msg: "All fields are required!!"
+            })
+        } else {
+            User.findById(req.body.user_id, async function(err, user) {
+                if(user) {
+                    if(user.profile_picture == req.body.profile_picture) {
+                        res.status(404).send({
+                            success: false,
+                            msg: "Please make a change in profile picture to update."
+                        })
+                    } else {
+                        await User.findByIdAndUpdate(req.body.user_id,{
+                            $set: {
+                                profile_picture: req.body.profile_picture
+                            }
+                        }, async function(err, success) {
+                            if(success) {
+                                res.status(200).send({
+                                    success: true,
+                                    msg: "Successfully updated profile picture."
+                                })
+                            } else if(!success) {
+                                res.status(404).send({
+                                    success: false,
+                                    msg: "User does not exists."
+                                })
+                            } else {
+                                res.status(404).send({
+                                    success: false,
+                                    msg: "Unable to update profile picture, please try again.",
+                                    err: err
+                                })
+                            }
+                        })
+                    }
+                } else if(!user) {
+                    res.status(404).send({
+                        success: false,
+                        msg: "User does not exists."
+                    })
+                } else {
+                    res.status(404).send({
+                        success: false,
+                        msg: "Unable to update profile picture, please try again.",
                         err: err
                     })
                 }
