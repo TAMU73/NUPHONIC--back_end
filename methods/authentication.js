@@ -302,12 +302,12 @@ const functions = {
                 } else if (req.body.currentPassword != user.password){
                     res.status(404).send({
                         success: false,
-                        msg: "Previous password didn't match!!"
+                        msg: "Old password didn't match!!"
                     })
                 } else {
                     res.status(404).send({
                         success: false,
-                        msg: "New password shouldn't match with current password!!"
+                        msg: "New password shouldn't match with old password!!"
                     })
                 }
             }

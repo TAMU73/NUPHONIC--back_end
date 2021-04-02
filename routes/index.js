@@ -10,6 +10,12 @@ const support = require('../methods/support')
 const favouriteSong = require('../methods/favourite_song')
 const favouriteArtist = require('../methods/favourite_artist')
 const search = require('../methods/search')
+const suggest = require('../methods/suggest')
+
+
+//@desc suggest feature
+//@route /suggest_feature
+router.post('/suggest_feature', suggest.suggest_feature)
 
 //@desc get user's favourite artists list
 //@route /get_favourite_artists
