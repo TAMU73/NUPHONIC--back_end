@@ -81,7 +81,8 @@ const functions = {
                 msg: "All fields are required!!"
             })
         } else {
-            Genre.findOne({genre_name: req.body.genre_name}, async function(err, genre) {
+            var genreName = req.body.genre_name.toLowerCase().charAt(0).toUpperCase() + req.body.genre_name.toLowerCase().slice(1)
+            Genre.findOne({genre_name: genreName}, async function(err, genre) {
                 if(err) {
                     res.status(404).send({
                         success: false,
