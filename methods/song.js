@@ -1,5 +1,7 @@
 const Song = require('../models/song')
 const User = require('../models/user')
+const Support = require('../models/support')
+const Playlist = require('../models/playlist')
 
 const functions = {
     
@@ -169,7 +171,7 @@ const functions = {
             })
         } else {
             Song.findOneAndUpdate({_id: req.params.id}, 
-                {$inc:{listens: 1}}, function(err, song) {
+                {$inc:{listens: 1}}, async function(err, song) {
                     if(err) {
                         res.status(404).send({
                             success: false,
@@ -177,6 +179,10 @@ const functions = {
                             err: err
                         })
                     } else if(song) {
+                        await Support.updateMany(
+                            {'supported_song._id': req.params.id},
+                            {$inc: {'supported_song.listens': 1}}
+                        )
                         res.status(200).send({
                             success: true,
                             msg: "Successfully added listen!!"
@@ -208,6 +214,10 @@ const functions = {
                             if(song.album_name == 'Single') {
                                 await Song.deleteOne({_id: req.body.song_id}, async function(err, song){
                                     if(song) {
+                                        await Playlist.updateMany(
+                                            {playlist_songs: {"$in" : req.body.song_id}},
+                                            {$pull: {playlist_songs: req.body.song_id}}
+                                        )
                                         res.status(200).send({
                                             success: true,
                                             msg: "Successfully deleted the song.",
