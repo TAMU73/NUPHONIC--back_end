@@ -1,5 +1,6 @@
 const Song = require('../models/song')
 const User = require('../models/user')
+const Support = require('../models/support')
 
 const functions = {
     
@@ -169,7 +170,7 @@ const functions = {
             })
         } else {
             Song.findOneAndUpdate({_id: req.params.id}, 
-                {$inc:{listens: 1}}, function(err, song) {
+                {$inc:{listens: 1}}, async function(err, song) {
                     if(err) {
                         res.status(404).send({
                             success: false,
@@ -177,6 +178,10 @@ const functions = {
                             err: err
                         })
                     } else if(song) {
+                        await Support.updateMany(
+                            {'supported_song._id': req.params.id},
+                            {$inc: {'supported_song.listens': 1}}
+                        )
                         res.status(200).send({
                             success: true,
                             msg: "Successfully added listen!!"

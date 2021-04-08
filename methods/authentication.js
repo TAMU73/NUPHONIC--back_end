@@ -1,4 +1,6 @@
 const User = require('../models/user')
+const Song = require('../models/song')
+const Support = require('../models/support')
 const nodemailer = require('nodemailer')
 const sendgridTransport = require('nodemailer-sendgrid-transport')
 
@@ -611,6 +613,18 @@ const functions = {
                                     }
                                 }, async function(err, success) {
                                     if(success) {
+                                        await Song.updateMany(
+                                            {artist_id: req.body.user_id},
+                                            {artist_name: req.body.username}
+                                        )
+                                        await Support.updateMany(
+                                            {'supported_song.artist_id': req.body.user_id},
+                                            {'supported_song.artist_name': req.body.username}
+                                        )
+                                        await Support.updateMany(
+                                            {supporter_id: req.body.user_id},
+                                            {supporter_name: req.body.username}
+                                        )
                                         res.status(200).send({
                                             success: true,
                                             msg: "Successfully updated username."
@@ -732,6 +746,10 @@ const functions = {
                             }
                         }, async function(err, success) {
                             if(success) {
+                                await Support.updateMany(
+                                    {supporter_id: req.body.user_id},
+                                    {supporter_profile_picture: req.body.profile_picture}
+                                )
                                 res.status(200).send({
                                     success: true,
                                     msg: "Successfully updated profile picture."
